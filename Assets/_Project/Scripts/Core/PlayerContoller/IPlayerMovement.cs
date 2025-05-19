@@ -2,9 +2,10 @@
 {
     public interface IPlayerMovement
     {
-        void EnableMove();
-        void DisableMove();
+        void EnableInput();
+        void DisableInput();
+        void EnableGravitation();
+        void DisableGravitation();
         void Jump();
-        void SetOnStartPosition();
     }
 }

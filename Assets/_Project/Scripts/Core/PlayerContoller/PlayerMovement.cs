@@ -1,7 +1,6 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.Time;
 
 namespace Project.Core.PlayerController
 {
@@ -9,8 +8,6 @@ namespace Project.Core.PlayerController
     {
         private readonly IPlayerInput _playerInput;
         private readonly Rigidbody2D _playerRigidBody;
-        private readonly Transform _playerTransform;
-        private readonly Vector2 _startPosition;
         private readonly float _jumpForce;
 
         private bool _isMoving = false;
@@ -18,14 +15,11 @@ namespace Project.Core.PlayerController
         public PlayerMovement(
             IPlayerInput playerInput,
             Rigidbody2D playerRigidBody,
-            float jumpForce,
-            Transform playerTransform)
+            float jumpForce)
         {
             _playerInput = playerInput;
             _playerRigidBody = playerRigidBody;
             _jumpForce = jumpForce;
-            _playerTransform = playerTransform;
-            _startPosition = playerTransform.position;
         }
 
         public void Initialize() =>
@@ -34,26 +28,22 @@ namespace Project.Core.PlayerController
         public void Dispose() =>
             _playerInput.OnClick -= Jump;
 
-        public void EnableMove() =>
+        public void EnableInput() =>
             _isMoving = true;
 
-        public void DisableMove() => 
+        public void DisableInput() => 
             _isMoving = false;
+
+        public void EnableGravitation() =>
+            _playerRigidBody.isKinematic = false;
+
+        public void DisableGravitation() =>
+            _playerRigidBody.isKinematic = true;
 
         public void Jump()
         {
             if (_isMoving)
-            {
-                //_playerRigidBody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
                 _playerRigidBody.velocity = Vector2.up * _jumpForce;
-            }
-        }
-
-        public void SetOnStartPosition()
-        {
-            _playerRigidBody.isKinematic = true;
-            _playerTransform.position = _startPosition;
-            _playerRigidBody.isKinematic = false;
         }
     }
 }

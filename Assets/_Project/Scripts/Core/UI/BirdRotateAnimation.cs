@@ -37,9 +37,6 @@ namespace Project.Core.UI
             }
         }
 
-        public void ResetRotation() =>
-            _fbxTransform.rotation = Quaternion.identity;
-
         public void EnableAnimation() =>
             _animationIsPlaying = true;
 

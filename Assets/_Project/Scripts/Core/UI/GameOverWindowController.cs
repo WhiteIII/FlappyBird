@@ -6,23 +6,23 @@ namespace Project.Core.UI
     public class GameOverWindowController : IInitializable, IDisposable
     {
         private readonly UnityEngine.UI.Button _button;
-        private readonly BaseStateController _gameStateController;
+        private readonly IGameCycle _gameCycle;
 
         public GameOverWindowController(
             UnityEngine.UI.Button button,
-            BaseStateController gameStateController)
+            IGameCycle gameCycle)
         {
             _button = button;
-            _gameStateController = gameStateController;
+            _gameCycle = gameCycle;
         }
 
         public void Initialize() =>
-            _button.onClick.AddListener(StartGameplay);
+            _button.onClick.AddListener(GoToMenu);
 
         public void Dispose() =>
-            _button.onClick.RemoveListener(StartGameplay);
+            _button.onClick.RemoveListener(GoToMenu);
 
-        private async void StartGameplay() =>
-            await _gameStateController.Translate(typeof(MenuState));
+        private void GoToMenu() =>
+            _gameCycle.RestartScene();
     }
 }

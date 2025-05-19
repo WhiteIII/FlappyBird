@@ -9,7 +9,7 @@ namespace Project.Core.PlayerController
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Backspace) || Input.GetMouseButton(0))
+            if (Input.GetMouseButton(0))
                 OnClick?.Invoke();
         }
     }

@@ -5,14 +5,14 @@ namespace Project.Core.PlayerController
 {
     public class PlayerHealth : MonoBehaviour, IPlayerHealth
     {
-        private BaseStateController _gameStateContoller;
+        private IGameCycle _gameCycle;
         private bool _isKilling = false;
 
-        public void Initialize(BaseStateController gameStateController) =>
-            _gameStateContoller = gameStateController;
+        public void Initialize(IGameCycle gameCycle) =>
+            _gameCycle = gameCycle;
 
         public void Kill() =>
-            _gameStateContoller.Translate(typeof(GameOverState));
+            _gameCycle.StopGame();
 
         public void Revive() =>
             _isKilling = false;
